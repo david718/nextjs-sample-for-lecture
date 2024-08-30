@@ -1,18 +1,15 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import {
   NavigationDirection,
   useRouterWrapper,
 } from "./provider/RouterWrapperProvider";
-import { useEffect, useState } from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-
   const { direction } = useRouterWrapper();
-  console.log("🚀 ~ Template ~ direction:", direction);
 
   return (
     <div className="flex relative">
@@ -23,9 +20,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
           enter: (direction: NavigationDirection) => ({
             x: direction === "forward" ? "100vw" : "-100vw",
           }),
-          center: (direction: NavigationDirection) => ({
+          center: {
             x: 0,
-          }),
+          },
         }}
         initial={"enter"}
         animate={"center"}
@@ -38,25 +35,22 @@ export default function Template({ children }: { children: React.ReactNode }) {
         key={"prev cache page"}
         custom={direction}
         variants={{
-          enter: {
+          center: {
             x: 0,
           },
-          center: (direction: NavigationDirection) => ({
-            x: direction === "forward" ? "-100vw" : 0,
+          exit: (direction: NavigationDirection) => ({
+            x: direction === "forward" ? "-100vw" : "100vw",
           }),
-          exit: {
-            x: "100vw",
-          },
         }}
-        initial={direction === "forward" ? "enter" : "center"}
-        animate={direction === "forward" ? "center" : "exit"}
+        initial={"center"}
+        animate={"exit"}
         transition={{ duration: 1, ease: "easeInOut" }}
         style={{
           position: "absolute",
           width: "100vw",
         }}
       >
-        {"prev cache image page"}
+        {"caching page"}
       </motion.div>
     </div>
   );
