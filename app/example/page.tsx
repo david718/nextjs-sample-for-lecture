@@ -1,10 +1,8 @@
-import Link from "next/link";
-
 export default function Page() {
   return (
     <div>
-      <h1>APP Router</h1>
-      <Link href="/">go to home page</Link>
+      <h1>Example page</h1>
+      Here is Example page
     </div>
   );
 }

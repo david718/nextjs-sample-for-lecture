@@ -1,8 +1,19 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { NavLinks } from "@/app/components/nav-links";
 import "./globals.css";
+import AnimationProvider from "./provider/AnimationProvider";
+import { RouterWrapperProvider } from "./provider/RouterWrapperProvider";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  minimumScale: 1,
+  userScalable: false,
+};
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body>
+        <RouterWrapperProvider>
+          <AnimationProvider>
+            <NavLinks />
+            <main>{children}</main>
+          </AnimationProvider>
+        </RouterWrapperProvider>
+      </body>
     </html>
   );
 }
